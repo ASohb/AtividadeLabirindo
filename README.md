@@ -1,4 +1,5 @@
 🎯 Desafio: Fuga do Labirinto
+
 🧠 Objetivo:
 Crie um jogo em que o jogador controla um círculo usando as setas do teclado, tentando chegar até o objetivo final no outro lado da tela. No caminho, ele precisa evitar encostar nas paredes do labirinto!
 
