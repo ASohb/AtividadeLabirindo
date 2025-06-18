@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fuga do Labirinto</title>
+  <style>
+    canvas {
+      background-color: black;
+      display: block;
+      margin: auto;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="meuCanvas" width="600" height="400"></canvas>
+
+<script>
+const canvas = document.getElementById('meuCanvas');
+const ctx = canvas.getContext('2d');
+
+// Jogador
+let jogador = {
+  x: 40,
+  y: 40,
+  raio: 15,
+  cor: "white",
+  vel: 3
+};
+
+// Objetivo
+const objetivo = {
+  x: 540,
+  y: 320,
+  largura: 40,
+  altura: 40
+};
+
+// Labirinto: array de paredes
+const paredes = [
+  {x: 100, y: 0, largura: 20, altura: 300},
+  {x: 200, y: 100, largura: 20, altura: 300},
+  {x: 300, y: 0, largura: 20, altura: 250},
+  {x: 400, y: 150, largura: 20, altura: 250},
+  {x: 500, y: 0, largura: 20, altura: 250}
+];
+
+function desenharObjetivo() {
+  ctx.fillStyle = "green";
+  ctx.fillRect(objetivo.x, objetivo.y, objetivo.largura, objetivo.altura);
+}
+
+function desenharJogador() {
+  ctx.beginPath();
+  ctx.arc(jogador.x, jogador.y, jogador.raio, 0, Math.PI * 2);
+  ctx.fillStyle = jogador.cor;
+  ctx.fill();
+  ctx.closePath();
+}
+
+function desenharParedes() {
+  ctx.fillStyle = "gray";
+  for (let p of paredes) {
+    ctx.fillRect(p.x, p.y, p.largura, p.altura);
+  }
+}
+
+// Para implementar:
+function moverJogador() {
+  // Dica: usar variáveis como `setas.pressionada`
+  // e mover o jogador respeitando os limites da tela
+}
+
+function detectarColisaoComParede() {
+  // Dica: verificar se jogador.x/jogador.y colide com alguma parede
+  // Se colidir: jogador volta para o ponto inicial
+}
+
+function verificarVitoria() {
+  if (
+    jogador.x > objetivo.x &&
+    jogador.x < objetivo.x + objetivo.largura &&
+    jogador.y > objetivo.y &&
+    jogador.y < objetivo.y + objetivo.altura
+  ) {
+    alert("Você venceu!");
+    reiniciar();
+  }
+}
+
+function reiniciar() {
+  jogador.x = 40;
+  jogador.y = 40;
+}
+
+function loop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  moverJogador();
+  detectarColisaoComParede();
+  verificarVitoria();
+
+  desenharObjetivo();
+  desenharJogador();
+  desenharParedes();
+
+  requestAnimationFrame(loop);
+}
+
+// Adicionar controle do teclado
+document.addEventListener('keydown', function(e) {
+  // Exemplo:
+  // if (e.key === "ArrowUp") jogador.y -= jogador.vel;
+});
+
+loop();
+</script>
+</body>
+</html>
